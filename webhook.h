@@ -1,9 +1,11 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
+#include <nlohmann/json.hpp>
 
 namespace webhook {
-	void send(std::string url, std::string content);
+	nlohmann::json send(std::string url, std::string content);
 }
 
 

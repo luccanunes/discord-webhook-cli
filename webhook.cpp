@@ -1,9 +1,18 @@
 #include "webhook.h"
-#include <cpr/cpr.h>
 #include <iostream>
+#include <cpr/cpr.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace webhook {
-	void send(std::string url, std::string content) {
-		cpr::Post(cpr::Url{ url }, cpr::Payload{ {"content", content} });
+	json send(std::string url, std::string content) {
+		cpr::Response res = cpr::Post(cpr::Url{ url }, cpr::Payload{ {"content", content} });
+
+		json json;
+		if (res.text.length() != 0) {
+			json = json::parse(res.text);
+		}
+		return json;
 	}
 }
